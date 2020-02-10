@@ -81,8 +81,7 @@ def depthLimitedDFS(goal,limit):
     maxAgenda=1
     expandCalls=0
 
-    while (searchDepthCounter<limit):
-        #print("AGENDA IS " + str(agenda))
+    while (len(agenda)>0):
         currentPath = agenda.pop(0) # Retrieve first item from the queue
         if (currentPath[-1]==goal):
             #print("Match for " + goal + " found! " + str(currentPath))
@@ -92,7 +91,6 @@ def depthLimitedDFS(goal,limit):
             if (len(currentPath)<limit):
                 agenda=extendPath(currentPath)+agenda # Add new levels of the tree to the front of the agenda if length hasn't reached the limit
                 expandCalls+=1
-            elif (len(agenda)==0): break
             
             if (len(agenda)>maxAgenda): maxAgenda=len(agenda) # Update maximum size of the agenda
             
@@ -119,7 +117,6 @@ def dfsIter(goal):
     return finalPath
     
 if __name__=="__main__":
-    
     print("Exercise Two is running.")
     goalVal=input("Input a target MIU string:\t")
     print("\n")
