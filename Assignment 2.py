@@ -47,6 +47,7 @@ def breadthFirstSearch(goal):
     agenda =[["MI"]] # Initialise the agenda
     depthLimit = 1 # Number of elements to traverse before a layer is complete
     depthCount = 0 # Number of elements counted towards depthLimit
+    extendCalls = 0
 
     while (searchDepthCounter<searchDepthLimit):
         #print("AGENDA IS " + str(agenda))
@@ -58,11 +59,12 @@ def breadthFirstSearch(goal):
         
         currentPath = agenda.pop(0) # Retrieve first item from the queue
         if (currentPath[-1]==goal):
-            print("BFS:\tMatch for " + goal + " found! Final length of the path was " + str(len(currentPath)) + ", and \"extendPaths\" was called " + str(searchDepthCounter) + " times.")
+            print("BFS:\tMatch for " + goal + " found! Final length of the path was " + str(len(currentPath)) + ", and \"extendPaths\" was called " + str(extendCalls) + " times.")
             print("BFS:\tThe peak size of the agenda was " + str(highestAgendaSize) + ".")
             return currentPath
         else:
             agenda+=extendPath(currentPath)# Add new levels of the tree to the agenda
+            extendCalls+=1
             if (len(agenda)>highestAgendaSize): highestAgendaSize=len(agenda)
             
     print("BFS:\tNo match found within the bounds of the search (depth limit of " + str(searchDepthLimit) +").")
@@ -121,13 +123,14 @@ if __name__=="__main__":
     print("Exercise Two is running.")
     goalVal=input("Input a target MIU string:\t")
     print("\n")
-    bfsTimer=time.perf_counter_ns()
+    bfsTimer=time.perf_counter()
     print(breadthFirstSearch(goalVal))
-    bfsTimer=abs(bfsTimer-time.perf_counter_ns())
+    bfsTimer=abs(bfsTimer-time.perf_counter())
     print("\n")
-    dfsTimer=time.perf_counter_ns()
+    dfsTimer=time.perf_counter()
     print(dfsIter(goalVal))
-    dfsTimer=abs(dfsTimer-time.perf_counter_ns())
-    print("\nThe Breadth First Search took " + str(bfsTimer) + "ns to complete.")
-    print("\nThe Iterative Depth First Search took " + str(dfsTimer) + "ns to complete.")
-    
+    dfsTimer=abs(dfsTimer-time.perf_counter())
+	
+    print("\nThe breadth first search took " + str(bfsTimer) + "s to complete successfully.")
+    print("The depth first search took " + str(dfsTimer) + "s to complete successfully.")
+
