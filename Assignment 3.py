@@ -74,9 +74,21 @@ def dictBFS(goal):
     print("No match found for \"" + goal + "\" within the limits.")
     return None # No match found
 
+def estimateSteps(current,goal):
+    return int(not (current==goal))
+
+def aStarSearch(goal):
+    agenda=[]
+    found=False
+
+    while not found:
+        print("SEARSHING")
+
+
 if __name__=="__main__":
     print("CS310 Ex3 Started.")
     
     bfsTimer=time.perf_counter()
     print(dictBFS("MIUIU"))
-    print("This solution was found in " + str(bfsTimer-time.perf_counter()) + "s.")
+    print("This solution was found in " + str(bfsTimer-time.perf_counter()) + "s.\n")
+
