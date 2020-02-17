@@ -74,21 +74,40 @@ def dictBFS(goal):
     print("No match found for \"" + goal + "\" within the limits.")
     return None # No match found
 
+# TODO Everything
+# TODO Add comments for performance tracking
 def estimateSteps(current,goal):
-    return int(not (current==goal))
+    return int(not (current==goal)) # placeholder stub
 
 def aStarSearch(goal):
-    agenda=[]
-    found=False
+    agenda = ["MI"]
+    visited = {} # Dictionary of visited nodes in form node:distanceFromStart
+    found = (goal=="MI")
+    
+    #while not found:
+        
+        # get the lowest node A* score (distSoFar+expectedSteps) from the agenda 
 
-    while not found:
-        print("SEARSHING")
+        # If the node is the goal, yeet it as a treat
+            # Say match is good
+            # Construct return path
+            # Return it ;P
 
+        # Otherwise
+            # get extendPaths for the current node
+            # Add these with their distance from the start (current node's distance+1) to the agenda
+            # Add the current node to visited with its A* score
+    
+    return "SHMARMP"
 
 if __name__=="__main__":
     print("CS310 Ex3 Started.")
     
-    bfsTimer=time.perf_counter()
+    #bfsTimer=time.perf_counter()
     print(dictBFS("MIUIU"))
-    print("This solution was found in " + str(bfsTimer-time.perf_counter()) + "s.\n")
+    #print("This solution was found in " + str(bfsTimer-time.perf_counter()) + "s.\n")
+
+    print("\n")
+
+    print(aStarSearch("MI"))
 
