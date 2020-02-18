@@ -9,7 +9,7 @@ def nextStates(s):
 
     # Rule 2
     if s[0]=="M":
-        returnStates.append("M"+(s[1:]*2))
+        returnStates.append("M"+s[1:]+s[1:])
         
     # Rule 3
     tiIndex = s.find("III")
@@ -61,7 +61,8 @@ def dictBFS(goal):
         else:
             expandedPath=extendPath(currNode)
             for p in expandedPath:
-                nodes[p]=currNode # Add the new nodes to the dictionary
+                if p not in nodes.keys(): # If the node doesn't already have a specified
+                    nodes[p]=currNode # Add the new nodes to the dictionary
             layerCount["nextLayer"]+=len(expandedPath) # Add the new nodes to the size of the next layer
             agenda+=expandedPath # Add the new nodes to the agenda for consideration
 
