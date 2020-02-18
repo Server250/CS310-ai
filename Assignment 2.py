@@ -59,8 +59,8 @@ def breadthFirstSearch(goal):
         
         currentPath = agenda.pop(0) # Retrieve first item from the queue
         if (currentPath[-1]==goal):
-            print("BFS:\tMatch for " + goal + " found! Final length of the path was " + str(len(currentPath)) + ", and \"extendPaths\" was called " + str(extendCalls) + " times.")
-            print("BFS:\tThe peak size of the agenda was " + str(highestAgendaSize) + ".")
+            #print("BFS:\tMatch for " + goal + " found! Final length of the path was " + str(len(currentPath)) + ", and \"extendPaths\" was called " + str(extendCalls) + " times.")
+            #print("BFS:\tThe peak size of the agenda was " + str(highestAgendaSize) + ".")
             return currentPath
         else:
             agenda+=extendPath(currentPath)# Add new levels of the tree to the agenda
