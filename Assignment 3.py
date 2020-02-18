@@ -48,7 +48,7 @@ def dictBFS(goal):
         currNode = agenda.pop(0) # Retrieve first element from agenda queue
 
         if currNode==goal:
-            print("Match for \"" + goal + "\" found!")
+            print("BFS:\tMatch for \"" + goal + "\" found!")
             retPath=[currNode]
             # Construct final path for return
             nextParent=nodes[retPath[0]]
@@ -71,43 +71,98 @@ def dictBFS(goal):
             layerCount["nextLayer"]=0
             curLayer+=1        
 
-    print("No match found for \"" + goal + "\" within the limits.")
+    print("BFS:\tNo match found for \"" + goal + "\" within the limits.")
     return None # No match found
 
-# TODO Everything
 # TODO Add comments for performance tracking
 def estimateSteps(current,goal):
-    return int(not (current==goal)) # placeholder stub
+    #return int(not (current==goal)) # placeholder stub
+    score=0
+
+    goalI=goal.count("I")+(3*goal.count("U"))
+    currentI=current.count("I")+(3*current.count("U"))
+
+    if goalI%3==0: # Unreachable state
+        return None
+
+    score+=current.count("U") # add score for every U that will need to be changed to Is
+
+    if currentI<goalI: # if current state has fewer Is than the goal state
+            score+=1
+
+    if goalI%3==1: # Target is in form 3n+1
+        if not(currentI%3==1): # if current state is not of form 3n+1
+            score+=1
+
+    if goalI%3==2: # Target is in form 3n+2
+        if not(currentI%3==2): # if current state is not of form 3n+2
+            score+=1
+
+    return score
 
 def aStarSearch(goal):
-    agenda = ["MI"]
-    visited = {} # Dictionary of visited nodes in form node:distanceFromStart
+    nodes = {"MI":None} # Dictionary of all nodes in system in form node:parent
+    agenda = {"MI":[estimateSteps("MI",goal),0]} # Dictionary of nodes in agenda in form node:[A*Score,distanceFromStart]
+    visited = {} # Dictionary of visited nodes in form node:A*Score
     found = (goal=="MI")
-    
-    #while not found:
+    c=0
+
+    while not found:
         
+        currNode="M"
+        currVal=10000
         # get the lowest node A* score (distSoFar+expectedSteps) from the agenda 
+        print(agenda.keys())
+        for x in agenda.keys():
+            xRating=agenda[x][0]
+            print("XXX: " + x + ", " + str(xRating))
+            if ((not (x in visited.keys())) or (visited[x]>xRating)):
+                if xRating<currVal:    
+                    currNode=x
+                    currVal=agenda[x][0]
 
-        # If the node is the goal, yeet it as a treat
-            # Say match is good
-            # Construct return path
-            # Return it ;P
+        print("V " + str(visited))
+        print ("Current node:\t" + currNode)
 
-        # Otherwise
-            # get extendPaths for the current node
-            # Add these with their distance from the start (current node's distance+1) to the agenda
-            # Add the current node to visited with its A* score
-    
-    return "SHMARMP"
+        # If the node is the goal
+        if currNode==goal:
+            print("A*:\tMatch for \"" + goal + "\" found!")
+            retPath=[currNode]
+            # Construct final path for return
+            nextParent=nodes[retPath[0]]
+            while (nextParent): # While a parent exists for the most recently added node
+                retPath.insert(0,nextParent)
+                nextParent=nodes[retPath[0]]
+            return retPath
+        else: # Otherwise expand the paths
+            expandedPath=extendPath(currNode)
+            for p in expandedPath:
+                stepsFromStart=(agenda[currNode][1]+1)
+                stepsLeft=estimateSteps(p,goal)
+                if not stepsLeft: return None# If the goal state is unreachable, get on out
+                newAScore = stepsLeft+stepsFromStart
+
+                if (not (p in visited.keys()) or (visited[p]>newAScore)): # Check if the node has already been explored, and if this is a more efficient method
+                    #print("Adding " + p + " to agenda " )
+                    agenda[p] = [newAScore,stepsFromStart]
+                    nodes[p] = currNode # Add the node to the map of parents
+            visited[currNode]=currVal# Add the current node to visited with its A* score
+
+        # print("c: " + str(c) + ", agenda:" + str(agenda))
+        # if c>1:
+        #     found=True
+        # c+=1
+    print("A*:\tNo match found for \"" + goal + "\" within the limits.")
+    return None
 
 if __name__=="__main__":
     print("CS310 Ex3 Started.")
     
     #bfsTimer=time.perf_counter()
-    print(dictBFS("MIUIU"))
+    print("Return of BFS: " + str(dictBFS("MIUIU")))
     #print("This solution was found in " + str(bfsTimer-time.perf_counter()) + "s.\n")
 
     print("\n")
 
-    print(aStarSearch("MI"))
+    print("Return of A*: " + str(aStarSearch("MIIII")))
 
