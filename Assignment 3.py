@@ -87,13 +87,14 @@ def aStarSearch(goal):
     visited = {} # Dictionary of visited nodes in form node:A*Score
     found = (goal=="MI")
     c=0
+    expansionCalls=0
 
     while not found:
         
         currNode="M"
         currVal=10000
         # get the lowest node A* score (distSoFar+expectedSteps) from the agenda 
-        print(agenda.keys())
+        #print(agenda.keys())
         for x in agenda.keys():
             xRating=agenda[x][0]
             
@@ -104,7 +105,7 @@ def aStarSearch(goal):
 
         # If the node is the goal
         if currNode==goal:
-            print("A*:\tMatch for \"" + goal + "\" found!")
+            print(f"A*:\tMatch for \"{goal}\" found! Expansion calls: {expansionCalls}")
             retPath=[currNode]
             # Construct final path for return
             nextParent=nodes[retPath[0]]
@@ -114,6 +115,7 @@ def aStarSearch(goal):
             return retPath
         else: # Otherwise expand the paths
             expandedPath=extendPath(currNode)
+            expansionCalls+=1
             stepsFromStart=(agenda[currNode][1]+1) # Add 1 to the parent's steps from beginning for this node
             for p in expandedPath:
                 stepsLeft=estimateSteps(p,goal)
@@ -126,8 +128,8 @@ def aStarSearch(goal):
             visited[currNode]=currVal# Add the current node to visited with its A* score
             agenda.pop(currNode) # Remove the current node from the agenda
 
-        print("V:\t" + str(visited))
-        print ("A:\t" + str(agenda))
+        #print("V:\t" + str(visited))
+        #print ("A:\t" + str(agenda))
 
     print("A*:\tNo match found for \"" + goal + "\" within the limits.")
     return None
@@ -144,5 +146,8 @@ if __name__=="__main__":
 
     print("\n")
 
-    print("Return of A*: " + str(aStarSearch("MIUIUIUIU")))
+    tests=["MII","MIUIUIUIU","MUIUIUIUI"]
+
+    for x in tests:
+        print("Return of A* {"+x+"} : " + str(aStarSearch(x)) + "\n")
 
