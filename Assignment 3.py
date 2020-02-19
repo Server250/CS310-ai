@@ -75,12 +75,16 @@ def dictBFS(goal):
     print("BFS:\tNo match found for \"" + goal + "\" within the limits.")
     return None # No match found
 
-# TODO Add comments for performance tracking
 def estimateSteps(current,goal):
-    return int(not (current==goal)) # placeholder stub
-    
+    #return int(not (current==goal)) # placeholder stub
 
-#TODO Error handling for heuristic function wherever it's called
+    ass = 0
+
+    if len(current) >= len(goal):
+        ass += (len(current) - len(goal))**2
+
+    return ass
+
 def aStarSearch(goal):
     nodes = {"MI":None} # Dictionary of all nodes in system in form node:parent
     agenda = {"MI":[estimateSteps("MI",goal),0]} # Dictionary of nodes in agenda in form node:[A*Score,distanceFromStart]
@@ -146,7 +150,7 @@ if __name__=="__main__":
 
     print("\n")
 
-    tests=["MII","MIUIUIUIU","MUIUIUIUI"]
+    tests=["MII","MIUIUIUIU","MUIUIUIUI","MUUUIIIII"]
 
     for x in tests:
         print("Return of A* {"+x+"} : " + str(aStarSearch(x)) + "\n")
