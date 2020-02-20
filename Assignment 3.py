@@ -81,7 +81,7 @@ def estimateSteps(current,goal):
     ass = 0
 
     if len(current) >= len(goal):
-        ass += (len(current) - len(goal))**2
+        ass += (len(current) - len(goal))
 
     return ass
 
