@@ -1,6 +1,6 @@
 # Return the minimax value of a game at position state
 def minimax_value(state):
-    print(f"MMV CALLED WITH {state}")
+    #print(f"MMV CALLED WITH {state}")
     if (bool(state[1]-1)):  # If player min's turn
         return min_move(state)
     else:                   # If player max's turn
@@ -25,7 +25,7 @@ def successor_moves(state):
         for n in range(1,3+1):
             if pile>=n: return_states.append(tuple(([]+piles[:i]+([(pile-n)]*int((pile-n)>0))+piles[i+1:],next_player)))
     
-    print(f"RETURN STATES: {return_states}")
+    #print(f"RETURN STATES: {return_states}")
     return return_states
 
 # Remove duplicate states from a list of states
@@ -39,7 +39,7 @@ def min_move(state):
     
     terminate = is_terminal(state)
     if (bool(terminate)): 
-        print(f"TERMINATED {state}")
+        #print(f"TERMINATED {state}")
         return terminate # If game has terminated, return the utility score
     
     for s in successor_moves(state): # For all possible successive states
@@ -69,4 +69,4 @@ if __name__=="__main__":
     # print(([]+piles[:1]+([(1-1)]*int((1-1)>0))+piles[1+1:],1))
 
     for i,t in enumerate(tests):
-        print(f"Test {i+1} is {t}. Returned value: {minimax_value(t)}\tExpected value: {test_results[i]}")
+        print(f"Test {i+1} is {t}. \tReturned value: {minimax_value(t)}\tExpected value: {test_results[i]}")
