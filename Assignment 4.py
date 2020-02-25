@@ -1,6 +1,5 @@
 # Return the minimax value of a game at position state
 def minimax_value(state):
-    #print(f"MMV CALLED WITH {state}")
     if (bool(state[1]-1)):  # If player min's turn
         return min_move(state)
     else:                   # If player max's turn
@@ -24,13 +23,9 @@ def successor_moves(state):
     for i, pile in enumerate(piles): # For every remaining pile
         for n in range(1,3+1):
             if pile>=n: return_states.append(tuple(([]+piles[:i]+([(pile-n)]*int((pile-n)>0))+piles[i+1:],next_player)))
-    
-    #print(f"RETURN STATES: {return_states}")
+
     return return_states
 
-# Remove duplicate states from a list of states
-def removeDuplicates(states): # TODO list comprehension
-    print("STUB")
 
 # TODO Merge min and max move functions into one, tasty func
 # Evaluate the game from the Min player's view
@@ -38,9 +33,7 @@ def min_move(state):
     val=1 # The highest possible value is the default minimum
     
     terminate = is_terminal(state)
-    if (bool(terminate)): 
-        #print(f"TERMINATED {state}")
-        return terminate # If game has terminated, return the utility score
+    if (bool(terminate)): return terminate # If game has terminated, return the utility score
     
     for s in successor_moves(state): # For all possible successive states
         val = min(val, max_move(s)) # Update the utility val of the min player
@@ -64,9 +57,6 @@ if __name__=="__main__":
 
     tests = [([2,3],1),([5,5,5],1),([1,2],2)]
     test_results = [1,-1,-1]
-
-    # piles=[2,1,1]
-    # print(([]+piles[:1]+([(1-1)]*int((1-1)>0))+piles[1+1:],1))
 
     for i,t in enumerate(tests):
         print(f"Test {i+1} is {t}. \tReturned value: {minimax_value(t)}\tExpected value: {test_results[i]}")
