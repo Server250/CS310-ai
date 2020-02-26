@@ -83,4 +83,4 @@ if __name__=="__main__":
         tscore = minimax_value(t)
         paths = {0:(max_path+[([],1)]),1:(min_path+[([],2)])}
         print(f"Test {i+1} is {t}. \tReturned value: {tscore}\tExpected value: {test_results[i]}")
-        print(f"Game path was: {paths[int(tscore>0)]}\n")
+        print(f"Game path was: {paths[int(not (tscore>0))]}\n")
