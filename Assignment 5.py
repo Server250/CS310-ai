@@ -41,7 +41,7 @@ def min_move(state, a, b):
         
         if newScore<val:
             val = newScore
-        if newScore<=alpha:
+        if newScore<=alpha: # This alpha is passed down, so v best alternative from across the tree
             return val
         if newScore<beta:
             beta = newScore
@@ -66,7 +66,7 @@ def max_move(state, a, b):
         
         if newScore>val:
             val = newScore
-        if newScore>=beta:
+        if newScore>=beta: # This beta is passed down, so v best alternative from across the tree
             return val
         if newScore>alpha:
             alpha = newScore
