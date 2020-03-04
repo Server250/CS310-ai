@@ -1,6 +1,10 @@
+relations = {}
+exampleplay=[]
+
 # Return the minimax value of a game at position state
 def minimax_value(state):
-
+    global relations
+    relations[repr(state)]=""
     if (bool(state[1]-1)):  # If player min's turn
         return min_move(state, -1*float("inf"), float("inf"))
     else:                   # If player max's turn
@@ -34,21 +38,26 @@ def min_move(state, a, b):
     beta = b
 
     terminate = is_terminal(state)
-    if (bool(terminate)): return terminate # If game has terminated, return the utility score
+    if (bool(terminate)): # If game has terminated
+        # Construct example path
+        if not exampleplay:
+            ns = repr(state)
+            while (not relations[ns] == ""):
+                exampleplay.insert(0,relations[ns])
+                ns=relations[ns]
+        return terminate # return the utility score
     
     for s in successor_moves(state): # For all possible successive states
+        relations[repr(s)]=repr(state)
         newScore = max_move(s, alpha, beta)
         
         if newScore<val:
             val = newScore
         if newScore<=alpha: # This alpha is passed down, so v best alternative from across the tree
+            print(f"Alpha pruning at {state} with alpha={alpha} and beta={beta}.")
             return val
         if newScore<beta:
             beta = newScore
-
-        # Update the utility val of the min player
-        """if newScore<val:
-            val = newScore"""
 
     return val
 
@@ -59,21 +68,27 @@ def max_move(state, a, b):
     beta = b
 
     terminate = is_terminal(state)
-    if (bool(terminate)): return terminate # If game has terminated, return the utility score
-    
+    if (bool(terminate)): # If game has terminated
+        # Construct example path
+        if not exampleplay:
+            ns = repr(state)
+            while (not relations[ns] == ""):
+                exampleplay.insert(0,relations[ns])
+                ns=relations[ns]
+            
+        return terminate # return the utility score
+
     for s in successor_moves(state): # For all possible successive states
+        relations[repr(s)]=repr(state)
         newScore = min_move(s, alpha, beta)
         
         if newScore>val:
             val = newScore
         if newScore>=beta: # This beta is passed down, so v best alternative from across the tree
+            print(f"Beta pruning at {state} with alpha={alpha} and beta={beta}.")
             return val
         if newScore>alpha:
             alpha = newScore
-        
-        # Update the utility val of the max player
-        """if newScore>val:
-            val = newScore"""
 
     return val
 
@@ -86,11 +101,12 @@ def maxvalue_prune(state, alpha, beta):
 if __name__=="__main__":
     print("Assignment 4 : NIM Player Started\n")
 
-    tests = [([2,3],1),([5,5,5],1),([1,2],2)]
-    test_results = [1,-1,-1]
+    #tests = [([2,3],1),([5,5,5],1),([1,2],2)]
+    test_results = [1,1,-1,-1]
+    tests=[([2,2],2)]
 
     for i,t in enumerate(tests):
         tscore = minimax_value(t)
-        #paths = {0:(max_path+[([],1)]),1:(min_path+[([],2)])}
+        paths = {0:(exampleplay+[([],1)]),1:(exampleplay+[([],2)])}
         print(f"Test {i+1} is {t}. \tReturned value: {tscore}\tExpected value: {test_results[i]}")
-        #print(f"Game path was: {paths[int(not (tscore>0))]}\n")
+        print(f"An example play is: {paths[tscore]}\n")
