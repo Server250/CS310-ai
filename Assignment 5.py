@@ -102,10 +102,10 @@ def test_timing(*state):
     return v
 
 if __name__=="__main__":
-    print("Assignment 4 : NIM Player Started\n")
+    print("Assignment 5 : NIM Player Started\n")
 
     tests = [([2,3],1),([5,5,5],1),([1,2],2)]
-    test_results = [1,1,-1,-1]
+    test_results = [1,-1,-1]
     
     test_timing([2,2],2)
     """for i,t in enumerate(tests):

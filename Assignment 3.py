@@ -150,7 +150,7 @@ if __name__=="__main__":
 
     print("\n")
 
-    tests=["MII","MIUIUIUIU","MUIUIUIUI","MUUUIIIII"]
+    tests=["MUIU","MII","MIUIUIUIU","MUIUIUIUI","MUUUIIIII"]
 
     for x in tests:
         print("Return of A* {"+x+"} : " + str(aStarSearch(x)) + "\n")
