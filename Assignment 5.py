@@ -1,3 +1,5 @@
+import time
+
 relations = {}
 exampleplay=[]
 
@@ -92,21 +94,22 @@ def max_move(state, a, b):
 
     return val
 
-def minvalue_prune(state, alpha, beta):
-    print("minv")
-
-def maxvalue_prune(state, alpha, beta):
-    print("maxv")
+def test_timing(*state):
+    st = time.time()
+    v = minimax_value(state)
+    en = time.time()
+    print(f"Time taken: {en-st}s.")
+    return v
 
 if __name__=="__main__":
     print("Assignment 4 : NIM Player Started\n")
 
-    #tests = [([2,3],1),([5,5,5],1),([1,2],2)]
+    tests = [([2,3],1),([5,5,5],1),([1,2],2)]
     test_results = [1,1,-1,-1]
-    tests=[([2,2],2)]
-
-    for i,t in enumerate(tests):
+    
+    test_timing([2,2],2)
+    """for i,t in enumerate(tests):
         tscore = minimax_value(t)
         paths = {0:(exampleplay+[([],1)]),1:(exampleplay+[([],2)])}
         print(f"Test {i+1} is {t}. \tReturned value: {tscore}\tExpected value: {test_results[i]}")
-        print(f"An example play is: {paths[tscore]}\n")
+        print(f"An example play is: {paths[tscore]}\n")"""
