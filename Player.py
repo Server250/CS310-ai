@@ -31,7 +31,6 @@ class MinMaxPlayer(Player):
         Player.__init__(self)
         self.name=name
         self.relations={}
-        self.goalState=[]
         pass
 
     def turn(self,state):
@@ -40,15 +39,15 @@ class MinMaxPlayer(Player):
 
         # Clear relations
         self.relations.clear()
+        self.relations[repr(state)]=""
 
         if (self.min(state, -1*float("inf"), float("inf")) < 0):
-            return (self.buildPath(self.goalState)[1])
+            return (self.buildPath(repr([]))[1])
         else:
-            print("No good one found, shit fizucked")
+            #print("No good move found.")
             retState = state
             randPile = random.randint(0,len(retState)-1)
             retState[randPile]-=random.randint(1,retState[randPile])
-            
             retState=[x for x in retState if x != 0]
             
             return retState
@@ -59,7 +58,6 @@ class MinMaxPlayer(Player):
         beta = b
 
         if (state==[]):
-            self.goalState=state
             return -1
 
         for s in self.succStates(state): # For all possible successive states
@@ -107,10 +105,13 @@ class MinMaxPlayer(Player):
 
     def buildPath(self,state):
         retPath = []
-        s = repr(state)
-        while (not self.relations[s] == ""):
+        s = state
+        #print(f"Relations: {self.relations}")
+        while (self.relations[s] != ""):
             retPath.insert(0,self.relations[s])
             s=self.relations[s]
+
+        return retPath
 
 class MCTSPlayer(Player):
     def __init__(self,name):
