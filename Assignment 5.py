@@ -15,6 +15,14 @@ def minimax_value(state):
 # Return val if state is terminal, 0 if not
 def is_terminal(state):
     if (state[0] == []) or (sum(state[0]) == 0):      # If there are no moves remaining
+
+        # Construct example path
+        if not exampleplay:
+            ns = repr(state)
+            while (not relations[ns] == ""):
+                exampleplay.insert(0,relations[ns])
+                ns=relations[ns]
+
         if state[1] == 1:   # Win for Max
             return 1
         else:               # Win for Min
@@ -41,12 +49,7 @@ def min_move(state, a, b):
 
     terminate = is_terminal(state)
     if (bool(terminate)): # If game has terminated
-        # Construct example path
-        if not exampleplay:
-            ns = repr(state)
-            while (not relations[ns] == ""):
-                exampleplay.insert(0,relations[ns])
-                ns=relations[ns]
+        
         return terminate # return the utility score
     
     for s in successor_moves(state): # For all possible successive states
@@ -71,13 +74,7 @@ def max_move(state, a, b):
 
     terminate = is_terminal(state)
     if (bool(terminate)): # If game has terminated
-        # Construct example path
-        if not exampleplay:
-            ns = repr(state)
-            while (not relations[ns] == ""):
-                exampleplay.insert(0,relations[ns])
-                ns=relations[ns]
-            
+        
         return terminate # return the utility score
 
     for s in successor_moves(state): # For all possible successive states
@@ -104,12 +101,5 @@ def test_timing(*state):
 if __name__=="__main__":
     print("Assignment 5 : NIM Player Started\n")
 
-    tests = [([2,3],1),([5,5,5],1),([1,2],2)]
-    test_results = [1,-1,-1]
-    
     test_timing([2,2],2)
-    """for i,t in enumerate(tests):
-        tscore = minimax_value(t)
-        paths = {0:(exampleplay+[([],1)]),1:(exampleplay+[([],2)])}
-        print(f"Test {i+1} is {t}. \tReturned value: {tscore}\tExpected value: {test_results[i]}")
-        print(f"An example play is: {paths[tscore]}\n")"""
+    print(exampleplay[1])

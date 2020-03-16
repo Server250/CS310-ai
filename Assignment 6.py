@@ -1,5 +1,7 @@
 import random
-from Assignment6CPU import player
+from Player import HumanPlayer
+from Player import MinMaxPlayer
+from Player import MCTSPlayer
 
 def nim_game():
     # Setup stage
@@ -8,14 +10,11 @@ def nim_game():
     numPiles = -1
     maxPileSize = -1
     playerTurn = -1
-    turnNames = {}
     currentTurn = 0
 
     while numPiles<1: numPiles = int(input("How many piles?\t").strip())
     while maxPileSize<1: maxPileSize = int(input("Maximum pile size?\t").strip())
-    while playerTurn>1 or playerTurn<0: playerTurn = int(input("Would you like to go first or second? (1 | 2)\t").strip())-1
-    turnNames[playerTurn] = "your"
-    turnNames[int(not(bool(playerTurn)))] = "the computer's"
+    while playerTurn>1 or playerTurn<0: playerTurn = int(input("Which player should go first? (1 | 2)\t").strip())-1
    
     for _ in range(numPiles):
         random.seed()
@@ -25,14 +24,14 @@ def nim_game():
     c = 5 # Debug value, allow c turns
     while gamePlaying:
 
-        print(f"\nThe current game state is: {gameState}. It is {turnNames[currentTurn]} turn!")
+        #print(f"\nThe current game state is: {gameState}. It is {turnNames[currentTurn]} turn!")
         
-        if currentTurn==playerTurn:
+        """if currentTurn==playerTurn:
             gameState = human_turn(gameState)
         else:
-            gameState = computer_turn(gameState)
+            gameState = computer_turn(gameState)"""
 
-        currentTurn=int(not(bool(currentTurn))) # Change turn
+        #currentTurn=int(not(bool(currentTurn))) # Change turn
         
         c-=1
         if (c<=0):
