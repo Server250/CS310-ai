@@ -101,5 +101,4 @@ def test_timing(*state):
 if __name__=="__main__":
     print("Assignment 5 : NIM Player Started\n")
 
-    test_timing([2,2],2)
-    print(exampleplay[1])
+    test_timing([5,5,5],1)
