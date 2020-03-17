@@ -44,7 +44,7 @@ def nim_game():
         #c-=1
         currentTurn=int(not(bool(currentTurn))) # Change turn
 
-    print(f"\nPlayer {int(not(bool(currentTurn)))} Won!\nThe final game state is: {gameState}.\n")
+    print(f"\nPlayer {int(not(bool(currentTurn))) + 1} Won!\nThe final game state is: {gameState}.\n")
 
 if __name__=="__main__":
     print("Assignment 6 started.\n")

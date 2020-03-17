@@ -19,10 +19,15 @@ class HumanPlayer(Player):
         pileChoice = -1
         numSticks = -1
 
-        while (pileChoice<1) or (pileChoice>len(state)): pileChoice = int(input(f"Which pile would you like to nim from? (1-{len(state)})\t").strip())
-        while (numSticks<1) or (numSticks>min(state[pileChoice-1],3)): numSticks = int(input(f"How many sticks do you wish to nim? (1-{min(state[pileChoice-1],3)})\t").strip())
+        if (type(state) == type([])):
+            s = state
+        else:
+            s = eval(state)
 
-        newstate = state[:pileChoice-1] + ([(state[pileChoice-1]-numSticks)]*int((state[pileChoice-1]-numSticks)>0)) + state[pileChoice:]
+        while (pileChoice<1) or (pileChoice>len(s)): pileChoice = int(input(f"Which pile would you like to nim from? (1-{len(s)})\t").strip())
+        while (numSticks<1) or (numSticks>min(s[pileChoice-1],3)): numSticks = int(input(f"How many sticks do you wish to nim? (1-{min(int(s[pileChoice-1]),3)})\t").strip())
+
+        newstate = s[:pileChoice-1] + ([(s[pileChoice-1]-numSticks)]*int((s[pileChoice-1]-numSticks)>0)) + s[pileChoice:]
 
         return newstate
     
