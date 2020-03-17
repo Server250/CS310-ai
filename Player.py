@@ -46,7 +46,7 @@ class MinMaxPlayer(Player):
         self.relations.clear()
         self.relations[repr(state)]=""
 
-        if (self.min(state, -1*float("inf"), float("inf")) < 0):
+        if (self.max(state, -1*float("inf"), float("inf")) > 0):
             return (self.buildPath(repr([]))[1])
         else:
             #print("No good move found.")
@@ -120,6 +120,8 @@ class MinMaxPlayer(Player):
         while (self.relations[s] != ""):
             retPath.insert(0,self.relations[s])
             s=self.relations[s]
+        if (len(retPath) == 1):
+            retPath.append([])
 
         return retPath
 
