@@ -38,7 +38,13 @@ def nim_game():
     c=2
     while (c>0) and (gamePlaying) and (gameState!=[]):
 
+        
+
         print(f"\nThe current game state is: {gameState}. It is {players[currentTurn].name}'s turn!")
+
+        if (type(gameState) != type([])):
+            gameState=eval(gameState)
+
         gameState = players[currentTurn].turn(gameState)
 
         #c-=1

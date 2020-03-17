@@ -102,9 +102,14 @@ class MinMaxPlayer(Player):
     def succStates(self,state):
         return_states=list()
 
-        for i, pile in enumerate(state): # For every remaining pile
+        if (type(state) == type([])):
+            s = state
+        else:
+            s = eval(state)
+
+        for i, pile in enumerate(s): # For every remaining pile
             for n in range(1,3+1):
-                if pile>=n: return_states.append([]+state[:i]+([(pile-n)]*int((pile-n)>0))+state[i+1:])
+                if int(pile)>=n: return_states.append([]+s[:i]+([(pile-n)]*int((pile-n)>0))+s[i+1:])
 
         return return_states
 
